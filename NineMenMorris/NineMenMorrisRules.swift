@@ -15,7 +15,7 @@
  *         19   16   13
  *     20       17       14
  * 21           18           15
- *
+ *ä
  */
 
 import Foundation
@@ -28,10 +28,10 @@ public class NineMenMorrisRules {
 	static let BLUE_MARKER = 4;
 	static let RED_MARKER = 5;
     
-    private var gameplan = Array<Int>()
-    private var bluemarker = 9
-    private var redmarker = 9
-    private var turn = RED_MOVES // player in turn
+    private var gameplan = [Int](count: 24, repeatedValue: 0)
+    private var bluemarkers = 9
+    private var redmarkers = 9
+    var turn = RED_MOVES // player in turn
 
 	/**
 	 * Returns true if a move is successful
@@ -39,10 +39,10 @@ public class NineMenMorrisRules {
     func legalMove(to: Int, from: Int, color: Int) -> Bool {
 		if color == turn {
 			if turn == NineMenMorrisRules.RED_MOVES {
-				if redmarker >= 0 {
+				if redmarkers >= 0 {
 					if gameplan[to] == NineMenMorrisRules.EMPTY_SPACE {
 						gameplan[to] = NineMenMorrisRules.RED_MARKER
-						redmarker--
+						redmarkers--
 						turn = NineMenMorrisRules.BLUE_MOVES
 						return true
 					}
@@ -61,10 +61,10 @@ public class NineMenMorrisRules {
 					return false
 				}
 			} else {
-				if bluemarker >= 0 {
+				if bluemarkers >= 0 {
 					if gameplan[to] == NineMenMorrisRules.EMPTY_SPACE {
 						gameplan[to] = NineMenMorrisRules.BLUE_MARKER
-						bluemarker--
+						bluemarkers--
 						turn = NineMenMorrisRules.RED_MOVES
 						return true
 					}
@@ -154,7 +154,7 @@ public class NineMenMorrisRules {
 			count++
 		}
         
-        if bluemarker <= 0 && redmarker <= 0 && countMarker < 3 {
+        if bluemarkers <= 0 && redmarkers <= 0 && countMarker < 3 {
 			return true
         } else {
 			return false
