@@ -35,29 +35,33 @@ class GameScene: SKScene {
             let location = touch.locationInNode(self)
             
             if let sprite = self.nodeAtPoint(location) as? SKSpriteNode {
-                if blueCheckers.contains(sprite) {
-                    colorMoving = 1
-                    checkerCurrentlyMoving = sprite
-                } else if redCheckers.contains(sprite) {
-                    colorMoving = 2
-                    checkerCurrentlyMoving = sprite
-                } else if boardPositionSprites.contains(sprite) && checkerCurrentlyMoving != nil {
-                    if let to = boardPositionSprites.indexOf(sprite) {
-                        var from: Int {
-                            if let index = boardPositions.indexOf(checkerCurrentlyMoving.position) {
-                                return index
-                            } else {
-                                return 0
-                            }
-                        }
-                        if brain.legalMove(to, from: from, color: colorMoving) {
-                            checkerCurrentlyMoving.position = sprite.position
-                        }
+                handleSpriteTouch(sprite)
+            }
+        }
+    }
+    
+    func handleSpriteTouch(sprite: SKSpriteNode) {
+        if blueCheckers.contains(sprite) {
+            colorMoving = 1
+            checkerCurrentlyMoving = sprite
+        } else if redCheckers.contains(sprite) {
+            colorMoving = 2
+            checkerCurrentlyMoving = sprite
+        } else if boardPositionSprites.contains(sprite) && checkerCurrentlyMoving != nil {
+            if let to = boardPositionSprites.indexOf(sprite) {
+                var from: Int {
+                    if let index = boardPositions.indexOf(checkerCurrentlyMoving.position) {
+                        return index
+                    } else {
+                        return 0
                     }
-                
-                    checkerCurrentlyMoving = nil
+                }
+                if brain.legalMove(to, from: from, color: colorMoving) {
+                    checkerCurrentlyMoving.position = sprite.position
                 }
             }
+            
+            checkerCurrentlyMoving = nil
         }
     }
     
@@ -125,8 +129,9 @@ class GameScene: SKScene {
         boardPositions.append(CGPoint(x: col1, y: row4))
         
         for position in boardPositions {
-            let dotSprite = SKSpriteNode(color: UIColor.blackColor(), size: dotSize)
+            let dotSprite = SKSpriteNode(imageNamed: "dotSprite.png")
             dotSprite.position = position
+            dotSprite.zPosition = 5
             boardPositionSprites.append(dotSprite)
             self.addChild(dotSprite)
         }
@@ -137,12 +142,14 @@ class GameScene: SKScene {
         let customFrameWidth = size.width * widthFactor
         let customFrameHeight = size.height * heightFactor
         let yStart = customFrameHeight / CGFloat(7)
+        let checkerZPosition = CGFloat(10)
         
         //BLUE
         let blueRow = customFrameHeight / CGFloat(8)
         for i in Range(start: 0, end: 9) {
             let checkerSprite = SKSpriteNode(color: UIColor.blueColor(), size: checkerSize)
             checkerSprite.position = CGPoint(x: customFrameWidth / CGFloat(9) * CGFloat(i + 1), y: blueRow)
+            checkerSprite.zPosition = checkerZPosition
             blueCheckers.append(checkerSprite)
             self.addChild(checkerSprite)
         }
@@ -152,6 +159,7 @@ class GameScene: SKScene {
         for i in Range(start: 0, end: 9) {
             let checkerSprite = SKSpriteNode(color: UIColor.redColor(), size: checkerSize)
             checkerSprite.position = CGPoint(x: customFrameWidth / CGFloat(9) * CGFloat(i + 1), y: redRow)
+            checkerSprite.zPosition = checkerZPosition
             redCheckers.append(checkerSprite)
             self.addChild(checkerSprite)
         }

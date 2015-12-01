@@ -15,6 +15,7 @@
 		521ADC731C04EBC60040499B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 521ADC721C04EBC60040499B /* Assets.xcassets */; };
 		521ADC761C04EBC60040499B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 521ADC741C04EBC60040499B /* LaunchScreen.storyboard */; };
 		521ADC7E1C04EBFF0040499B /* NineMenMorrisRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521ADC7D1C04EBFF0040499B /* NineMenMorrisRules.swift */; };
+		52A76F9E1C0DBC2D0093B369 /* dotSprite.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A76F9D1C0DBC2D0093B369 /* dotSprite.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		521ADC751C04EBC60040499B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		521ADC771C04EBC60040499B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		521ADC7D1C04EBFF0040499B /* NineMenMorrisRules.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NineMenMorrisRules.swift; sourceTree = "<group>"; };
+		52A76F9D1C0DBC2D0093B369 /* dotSprite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dotSprite.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				521ADC671C04EBC60040499B /* AppDelegate.swift */,
 				521ADC691C04EBC60040499B /* GameScene.sks */,
 				521ADC6B1C04EBC60040499B /* GameScene.swift */,
+				52A76F9D1C0DBC2D0093B369 /* dotSprite.png */,
 				521ADC6D1C04EBC60040499B /* GameViewController.swift */,
 				521ADC6F1C04EBC60040499B /* Main.storyboard */,
 				521ADC721C04EBC60040499B /* Assets.xcassets */,
@@ -135,6 +138,7 @@
 				521ADC6A1C04EBC60040499B /* GameScene.sks in Resources */,
 				521ADC761C04EBC60040499B /* LaunchScreen.storyboard in Resources */,
 				521ADC731C04EBC60040499B /* Assets.xcassets in Resources */,
+				52A76F9E1C0DBC2D0093B369 /* dotSprite.png in Resources */,
 				521ADC711C04EBC60040499B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -299,6 +303,7 @@
 				521ADC7C1C04EBC60040499B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
