@@ -58,6 +58,7 @@ class GameScene: SKScene {
                 }
                 if brain.legalMove(to, from: from, color: colorMoving) {
                     checkerCurrentlyMoving.position = sprite.position
+                    printTurnLabel()
                 }
             }
             
@@ -65,10 +66,32 @@ class GameScene: SKScene {
         }
     }
     
+    func printTurnLabel(){
+        let turnLabel = SKLabelNode()
+        if colorMoving == 1{
+            turnLabel.text = "Red's turn"
+        } else {
+            turnLabel.text = "Blue's turn"
+        }
+
+        let scale = SKAction.scaleTo(2.5, duration: 0.5)
+        let fade = SKAction.fadeOutWithDuration(0.5)
+        
+        turnLabel.fontName = "HelveticaNeue-Bold"
+        turnLabel.fontSize = 35
+        turnLabel.fontColor = UIColor.blackColor()
+        turnLabel.position = CGPoint(x: self.frame.width / 2, y: self.frame.height / 2)
+        turnLabel.zPosition = CGFloat(15)
+        
+        self.addChild(turnLabel)
+        
+        let sequence = SKAction.sequence([scale, fade])
+        turnLabel.runAction(sequence)
+    }
+    
     func setupBoardPositions() {
         let customFrameWidth = size.width * widthFactor
         let customFrameHeight = size.height * heightFactor
-        let dotSize = CGSize(width: CGFloat(10.0), height: CGFloat(10.0))
         let rowHeight = customFrameHeight / CGFloat(7)
         let yStart = customFrameHeight / CGFloat(7)
         
@@ -131,7 +154,7 @@ class GameScene: SKScene {
         for position in boardPositions {
             let dotSprite = SKSpriteNode(imageNamed: "dotSprite.png")
             dotSprite.position = position
-            dotSprite.zPosition = 5
+            dotSprite.zPosition = CGFloat(5)
             boardPositionSprites.append(dotSprite)
             self.addChild(dotSprite)
         }
