@@ -94,7 +94,6 @@ class GameScene: SKScene {
                 if brain.legalMove(to, from: from, color: colorMoving) {
                     checkerCurrentlyMoving.position = sprite.position
                     printTurnLabel()
-                    showEndScene()
                 }
             }
             
