@@ -37,10 +37,6 @@ public class NineMenMorrisRules {
 	 * Returns true if a move is successful
 	 */
     func legalMove(to: Int, from: Int, color: Int) -> Bool {
-//        print("redmarkers: \(redmarkers)")
-//        print("bluemarkers: \(bluemarkers)")
-//        print("gameplan[to]: \(gameplan[to])")
-//        print("gameplan[from]: \(from >= 0 ? gameplan[from] : -1)")
 		if color == turn {
 			if turn == NineMenMorrisRules.RED_MOVES {
 				if redmarkers > 0 {
@@ -54,7 +50,6 @@ public class NineMenMorrisRules {
 				/*else*/
 				if gameplan[to] == NineMenMorrisRules.EMPTY_SPACE {
                     let valid = isValidMove(to, from: from)
-                    print(valid)
 					if valid {
 						gameplan[to] = NineMenMorrisRules.RED_MARKER
 						turn = NineMenMorrisRules.BLUE_MOVES
@@ -79,7 +74,6 @@ public class NineMenMorrisRules {
 				}
 				if gameplan[to] == NineMenMorrisRules.EMPTY_SPACE {
                     let valid = isValidMove(to, from: from)
-                    print(valid)
 					if valid {
 						gameplan[to] = NineMenMorrisRules.BLUE_MARKER
 						turn = NineMenMorrisRules.RED_MOVES

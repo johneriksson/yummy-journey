@@ -74,7 +74,6 @@ class GameScene: SKScene {
             setCheckerCurrentlyMoving(sprite)
         } else if boardPositionSprites.contains(sprite) && checkerCurrentlyMoving != nil {
             if let to = boardPositionSprites.indexOf(sprite) {
-                print(checkerCurrentlyMoving.position)
                 var from: Int {
                     if let index = boardPositions.indexOf(checkerCurrentlyMoving.position) {
                         return index
@@ -82,8 +81,6 @@ class GameScene: SKScene {
                     
                     return -1
                 }
-                print("\nto: \(to)")
-                print("from: \(from)")
                 if brain.legalMove(to, from: from, color: colorMoving) {
                     checkerCurrentlyMoving.position = sprite.position
                     printTurnLabel()
@@ -214,7 +211,6 @@ class GameScene: SKScene {
         boardPositions.append(CGPoint(x: col1, y: row4))
         
         for position in boardPositions {
-            print(position)
             let dotSprite = SKSpriteNode(imageNamed: "dotSprite.png")
             dotSprite.position = position
             dotSprite.zPosition = CGFloat(5)
