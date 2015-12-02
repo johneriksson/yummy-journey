@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5211939F1C0F7B9200BB4888 /* EndScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5211939E1C0F7B9200BB4888 /* EndScene.swift */; };
 		521ADC681C04EBC60040499B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521ADC671C04EBC60040499B /* AppDelegate.swift */; };
 		521ADC6A1C04EBC60040499B /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 521ADC691C04EBC60040499B /* GameScene.sks */; };
 		521ADC6C1C04EBC60040499B /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521ADC6B1C04EBC60040499B /* GameScene.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5211939E1C0F7B9200BB4888 /* EndScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndScene.swift; sourceTree = "<group>"; };
 		521ADC641C04EBC60040499B /* NineMenMorris.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NineMenMorris.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		521ADC671C04EBC60040499B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		521ADC691C04EBC60040499B /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 				521ADC6D1C04EBC60040499B /* GameViewController.swift */,
 				521ADC7D1C04EBFF0040499B /* NineMenMorrisRules.swift */,
 				52EEE2E71C0F021C002218FE /* MenuScene.swift */,
+				5211939E1C0F7B9200BB4888 /* EndScene.swift */,
 			);
 			path = NineMenMorris;
 			sourceTree = "<group>";
@@ -161,6 +164,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5211939F1C0F7B9200BB4888 /* EndScene.swift in Sources */,
 				521ADC7E1C04EBFF0040499B /* NineMenMorrisRules.swift in Sources */,
 				521ADC6C1C04EBC60040499B /* GameScene.swift in Sources */,
 				52EEE2E81C0F021C002218FE /* MenuScene.swift in Sources */,

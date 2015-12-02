@@ -12,6 +12,7 @@ class GameScene: SKScene {
     
     let brain = NineMenMorrisRules()
     let menuScene = MenuScene()
+    let endScene = EndScene()
     var shouldInitialize = true
     
     var boardPositions = Array<CGPoint>()
@@ -27,7 +28,8 @@ class GameScene: SKScene {
     var checkerCurrentlyMovingOriginalColor: UIColor!
     var colorMoving = 0
     
-    var statusLabel: SKLabelNode!
+    var turnLabel: SKLabelNode!
+    var removeLabel: SKLabelNode!
     
     override func didMoveToView(view: SKView) {
         if shouldInitialize {
@@ -65,6 +67,14 @@ class GameScene: SKScene {
         scene?.view?.presentScene(menuScene, transition: transition)
     }
     
+    func showEndScene() {
+        let transition = SKTransition.revealWithDirection(.Right, duration: 1.0)
+        
+        endScene.scaleMode = .ResizeFill
+        
+        scene?.view?.presentScene(endScene, transition: transition)
+    }
+    
     func handleSpriteTouch(sprite: SKSpriteNode) {
         if blueCheckers.contains(sprite) {
             colorMoving = 1
@@ -84,6 +94,7 @@ class GameScene: SKScene {
                 if brain.legalMove(to, from: from, color: colorMoving) {
                     checkerCurrentlyMoving.position = sprite.position
                     printTurnLabel()
+                    showEndScene()
                 }
             }
             
@@ -111,10 +122,10 @@ class GameScene: SKScene {
         
         if colorMoving == 1{
             turnLabel.text = "Red's turn"
-            statusLabel.text = "Red's turn"
+            turnLabel.text = "Red's turn"
         } else {
             turnLabel.text = "Blue's turn"
-            statusLabel.text = "Blue's turn"
+            turnLabel.text = "Blue's turn"
         }
 
         let scale = SKAction.scaleTo(2.5, duration: 0.5)
@@ -132,8 +143,12 @@ class GameScene: SKScene {
         turnLabel.runAction(sequence)
     }
     
-    func updateStatusLabel() {
-        
+    func updateRemoveLabel(remove: Bool) {
+        if remove {
+            removeLabel.text = "Remove"
+        } else {
+            removeLabel.text = ""
+        }
     }
     
     func clearOld() {
@@ -251,13 +266,21 @@ class GameScene: SKScene {
         let customFrameWidth = size.width * widthFactor
         let topSectionY = size.height - CGFloat(50)
         
-        statusLabel = SKLabelNode(fontNamed: "HelveticaNeue-Bold")
-        statusLabel.text = "Red's turn"
-        statusLabel.name = "Status Label"
-        statusLabel.fontSize = CGFloat(20)
-        statusLabel.position = CGPoint(x: customFrameWidth / CGFloat(4), y: topSectionY)
-        statusLabel.fontColor = UIColor.blackColor()
-        self.addChild(statusLabel)
+        turnLabel = SKLabelNode(fontNamed: "HelveticaNeue-Bold")
+        turnLabel.text = "Red's turn"
+        turnLabel.name = "Status Label"
+        turnLabel.fontSize = CGFloat(20)
+        turnLabel.position = CGPoint(x: customFrameWidth / CGFloat(4), y: topSectionY)
+        turnLabel.fontColor = UIColor.blackColor()
+        self.addChild(turnLabel)
+        
+        removeLabel = SKLabelNode(fontNamed: "HelveticaNeue-Bold")
+        removeLabel.text = ""
+        removeLabel.name = "Remove Label"
+        removeLabel.fontSize = CGFloat(20)
+        removeLabel.position = CGPoint(x: customFrameWidth / CGFloat(4), y: topSectionY - 50)
+        removeLabel.fontColor = UIColor.blackColor()
+        self.addChild(removeLabel)
         
         let button = SKLabelNode(fontNamed: "HelveticaNeue-Bold")
         button.text = "Menu"
