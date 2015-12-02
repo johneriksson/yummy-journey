@@ -16,6 +16,7 @@
 		521ADC761C04EBC60040499B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 521ADC741C04EBC60040499B /* LaunchScreen.storyboard */; };
 		521ADC7E1C04EBFF0040499B /* NineMenMorrisRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521ADC7D1C04EBFF0040499B /* NineMenMorrisRules.swift */; };
 		52A76F9E1C0DBC2D0093B369 /* dotSprite.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A76F9D1C0DBC2D0093B369 /* dotSprite.png */; };
+		52EEE2E81C0F021C002218FE /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EEE2E71C0F021C002218FE /* MenuScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		521ADC771C04EBC60040499B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		521ADC7D1C04EBFF0040499B /* NineMenMorrisRules.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NineMenMorrisRules.swift; sourceTree = "<group>"; };
 		52A76F9D1C0DBC2D0093B369 /* dotSprite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dotSprite.png; sourceTree = "<group>"; };
+		52EEE2E71C0F021C002218FE /* MenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,18 +64,27 @@
 		521ADC661C04EBC60040499B /* NineMenMorris */ = {
 			isa = PBXGroup;
 			children = (
-				521ADC671C04EBC60040499B /* AppDelegate.swift */,
-				521ADC691C04EBC60040499B /* GameScene.sks */,
+				52EEE2E91C0F0B7F002218FE /* Supporting Files */,
 				521ADC6B1C04EBC60040499B /* GameScene.swift */,
-				52A76F9D1C0DBC2D0093B369 /* dotSprite.png */,
 				521ADC6D1C04EBC60040499B /* GameViewController.swift */,
-				521ADC6F1C04EBC60040499B /* Main.storyboard */,
-				521ADC721C04EBC60040499B /* Assets.xcassets */,
-				521ADC741C04EBC60040499B /* LaunchScreen.storyboard */,
-				521ADC771C04EBC60040499B /* Info.plist */,
 				521ADC7D1C04EBFF0040499B /* NineMenMorrisRules.swift */,
+				52EEE2E71C0F021C002218FE /* MenuScene.swift */,
 			);
 			path = NineMenMorris;
+			sourceTree = "<group>";
+		};
+		52EEE2E91C0F0B7F002218FE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				521ADC741C04EBC60040499B /* LaunchScreen.storyboard */,
+				521ADC6F1C04EBC60040499B /* Main.storyboard */,
+				521ADC721C04EBC60040499B /* Assets.xcassets */,
+				52A76F9D1C0DBC2D0093B369 /* dotSprite.png */,
+				521ADC771C04EBC60040499B /* Info.plist */,
+				521ADC691C04EBC60040499B /* GameScene.sks */,
+				521ADC671C04EBC60040499B /* AppDelegate.swift */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -152,6 +163,7 @@
 			files = (
 				521ADC7E1C04EBFF0040499B /* NineMenMorrisRules.swift in Sources */,
 				521ADC6C1C04EBC60040499B /* GameScene.swift in Sources */,
+				52EEE2E81C0F021C002218FE /* MenuScene.swift in Sources */,
 				521ADC6E1C04EBC60040499B /* GameViewController.swift in Sources */,
 				521ADC681C04EBC60040499B /* AppDelegate.swift in Sources */,
 			);

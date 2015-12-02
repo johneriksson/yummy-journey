@@ -232,4 +232,11 @@ public class NineMenMorrisRules {
         
 		return false
 	}
+    
+    func reset() {
+        gameplan = [Int](count: 24, repeatedValue: 0)
+        bluemarkers = 9
+        redmarkers = 9
+        turn = NineMenMorrisRules.RED_MOVES
+    }
 }

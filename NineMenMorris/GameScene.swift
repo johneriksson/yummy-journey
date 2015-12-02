@@ -11,6 +11,8 @@ import SpriteKit
 class GameScene: SKScene {
     
     let brain = NineMenMorrisRules()
+    let menuScene = MenuScene()
+    var shouldInitialize = true
     
     var boardPositions = Array<CGPoint>()
     var boardPositionSprites = Array<SKSpriteNode>()
@@ -25,19 +27,39 @@ class GameScene: SKScene {
     var colorMoving = 0
     
     override func didMoveToView(view: SKView) {
-        self.backgroundColor = UIColor.whiteColor()
-        setupBoardPositions()
-        setupCheckers()
+        if shouldInitialize {
+            brain.reset()
+            self.backgroundColor = UIColor.whiteColor()
+            
+            menuScene.setReturnScene(self)
+            menuScene.scaleMode = .ResizeFill
+            
+            clearOld()
+            setupBoardPositions()
+            setupCheckers()
+            setupTopSection()
+        }
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         for touch in touches {
             let location = touch.locationInNode(self)
             
+            if let label = self.nodeAtPoint(location) as? SKLabelNode {
+                if label.name == "Menu Button" {
+                    handleMenuButtonTouch()
+                }
+            }
             if let sprite = self.nodeAtPoint(location) as? SKSpriteNode {
                 handleSpriteTouch(sprite)
             }
         }
+    }
+    
+    func handleMenuButtonTouch() {
+        let transition = SKTransition.revealWithDirection(.Up, duration: 1.0)
+
+        scene?.view?.presentScene(menuScene, transition: transition)
     }
     
     func handleSpriteTouch(sprite: SKSpriteNode) {
@@ -66,7 +88,7 @@ class GameScene: SKScene {
         }
     }
     
-    func printTurnLabel(){
+    func printTurnLabel() {
         let turnLabel = SKLabelNode()
         if colorMoving == 1{
             turnLabel.text = "Red's turn"
@@ -87,6 +109,22 @@ class GameScene: SKScene {
         
         let sequence = SKAction.sequence([scale, fade])
         turnLabel.runAction(sequence)
+    }
+    
+    func updateStatusLabel() {
+        
+    }
+    
+    func clearOld() {
+        let children = self.children
+        for child in children {
+            child.removeFromParent()
+        }
+        
+        boardPositions.removeAll()
+        boardPositionSprites.removeAll()
+        blueCheckers.removeAll()
+        redCheckers.removeAll()
     }
     
     func setupBoardPositions() {
@@ -186,6 +224,27 @@ class GameScene: SKScene {
             redCheckers.append(checkerSprite)
             self.addChild(checkerSprite)
         }
+    }
+    
+    func setupTopSection() {
+        let customFrameWidth = size.width * widthFactor
+        let topSectionY = size.height - CGFloat(50)
+        
+        let statusLabel = SKLabelNode(fontNamed: "HelveticaNeue-Bold")
+        statusLabel.text = "Red's turn"
+        statusLabel.name = "Status Label"
+        statusLabel.fontSize = CGFloat(20)
+        statusLabel.position = CGPoint(x: customFrameWidth / CGFloat(4), y: topSectionY)
+        statusLabel.fontColor = UIColor.blackColor()
+        self.addChild(statusLabel)
+        
+        let button = SKLabelNode(fontNamed: "HelveticaNeue-Bold")
+        button.text = "Menu"
+        button.name = "Menu Button"
+        button.fontSize = CGFloat(20)
+        button.position = CGPoint(x: size.width - customFrameWidth / CGFloat(4), y: topSectionY)
+        button.fontColor = UIColor(red: CGFloat(0.4), green: CGFloat(0.4), blue: CGFloat(0.6), alpha: CGFloat(1.0))
+        self.addChild(button)
     }
 
 }
