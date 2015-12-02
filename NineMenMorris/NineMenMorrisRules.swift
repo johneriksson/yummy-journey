@@ -8,13 +8,13 @@
 /*
  * The game board positions
  *
- * 03           06           09
- *     02       05       08
- *         01   04   07
- * 24  23  22        10  11  12
- *         19   16   13
- *     20       17       14
- * 21           18           15
+ * 02           05           08
+ *     01       04       07
+ *         00   03   06
+ * 23  22  21        09  10  11
+ *         18   15   12
+ *     19       16       13
+ * 20           17           14
  *
  */
 
@@ -37,9 +37,13 @@ public class NineMenMorrisRules {
 	 * Returns true if a move is successful
 	 */
     func legalMove(to: Int, from: Int, color: Int) -> Bool {
+//        print("redmarkers: \(redmarkers)")
+//        print("bluemarkers: \(bluemarkers)")
+//        print("gameplan[to]: \(gameplan[to])")
+//        print("gameplan[from]: \(from >= 0 ? gameplan[from] : -1)")
 		if color == turn {
 			if turn == NineMenMorrisRules.RED_MOVES {
-				if redmarkers >= 0 {
+				if redmarkers > 0 {
 					if gameplan[to] == NineMenMorrisRules.EMPTY_SPACE {
 						gameplan[to] = NineMenMorrisRules.RED_MARKER
 						redmarkers--
@@ -50,9 +54,13 @@ public class NineMenMorrisRules {
 				/*else*/
 				if gameplan[to] == NineMenMorrisRules.EMPTY_SPACE {
                     let valid = isValidMove(to, from: from)
+                    print(valid)
 					if valid {
 						gameplan[to] = NineMenMorrisRules.RED_MARKER
 						turn = NineMenMorrisRules.BLUE_MOVES
+                        if from >= 0 {
+                            gameplan[from] = NineMenMorrisRules.EMPTY_SPACE
+                        }
 						return true
 					} else {
 						return false
@@ -61,7 +69,7 @@ public class NineMenMorrisRules {
 					return false
 				}
 			} else {
-				if bluemarkers >= 0 {
+				if bluemarkers > 0 {
 					if gameplan[to] == NineMenMorrisRules.EMPTY_SPACE {
 						gameplan[to] = NineMenMorrisRules.BLUE_MARKER
 						bluemarkers--
@@ -71,9 +79,13 @@ public class NineMenMorrisRules {
 				}
 				if gameplan[to] == NineMenMorrisRules.EMPTY_SPACE {
                     let valid = isValidMove(to, from: from)
+                    print(valid)
 					if valid {
 						gameplan[to] = NineMenMorrisRules.BLUE_MARKER
 						turn = NineMenMorrisRules.RED_MOVES
+                        if from >= 0 {
+                            gameplan[from] = NineMenMorrisRules.EMPTY_SPACE
+                        }
 						return true
 					} else {
 						return false
@@ -172,60 +184,59 @@ public class NineMenMorrisRules {
 	 * Check whether this is a legal move.
 	 */
     func isValidMove(to: Int, from: Int) -> Bool {
-		
         if gameplan[to] != NineMenMorrisRules.EMPTY_SPACE {
             return false
         }
 		
 		switch to {
+		case 0:
+			return (from == 3 || from == 21)
 		case 1:
 			return (from == 4 || from == 22)
 		case 2:
 			return (from == 5 || from == 23)
 		case 3:
-			return (from == 6 || from == 24)
+			return (from == 0 || from == 6 || from == 4)
 		case 4:
-			return (from == 1 || from == 7 || from == 5)
+			return (from == 3 || from == 5 || from == 1 || from == 7)
 		case 5:
-			return (from == 4 || from == 6 || from == 2 || from == 8)
+			return (from == 2 || from == 4 || from == 8)
 		case 6:
-			return (from == 3 || from == 5 || from == 9)
+			return (from == 3 || from == 9)
 		case 7:
 			return (from == 4 || from == 10)
 		case 8:
 			return (from == 5 || from == 11)
 		case 9:
-			return (from == 6 || from == 12)
+			return (from == 10 || from == 8 || from == 12)
 		case 10:
-			return (from == 11 || from == 7 || from == 13)
+			return (from == 9 || from == 11 || from == 7 || from == 13)
 		case 11:
-			return (from == 10 || from == 12 || from == 8 || from == 14)
+			return (from == 10 || from == 14 || from == 8)
 		case 12:
-			return (from == 11 || from == 15 || from == 9)
+			return (from == 15 || from == 9)
 		case 13:
-			return (from == 16 || from == 10)
+			return (from == 10 || from == 16)
 		case 14:
 			return (from == 11 || from == 17)
 		case 15:
-			return (from == 12 || from == 18)
+			return (from == 12 || from == 16 || from == 18)
 		case 16:
-			return (from == 13 || from == 17 || from == 19)
+			return (from == 13 || from == 15 || from == 19 || from == 17)
 		case 17:
-			return (from == 14 || from == 16 || from == 20 || from == 18)
+			return (from == 16 || from == 14 || from == 20)
 		case 18:
-			return (from == 17 || from == 15 || from == 21)
+			return (from == 15 || from == 21)
 		case 19:
 			return (from == 16 || from == 22)
 		case 20:
 			return (from == 17 || from == 23)
 		case 21:
-			return (from == 18 || from == 24)
+			return (from == 0 || from == 18 || from == 22)
 		case 22:
-			return (from == 1 || from == 19 || from == 23)
+			return (from == 21 || from == 1 || from == 19 || from == 23)
 		case 23:
-			return (from == 22 || from == 2 || from == 20 || from == 24)
-		case 24:
-			return (from == 3 || from == 21 || from == 23)
+			return (from == 2 || from == 20 || from == 22)
         default:
             break
 		}

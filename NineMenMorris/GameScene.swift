@@ -24,7 +24,10 @@ class GameScene: SKScene {
     let heightFactor = CGFloat(0.6)
     
     var checkerCurrentlyMoving: SKSpriteNode!
+    var checkerCurrentlyMovingOriginalColor: UIColor!
     var colorMoving = 0
+    
+    var statusLabel: SKLabelNode!
     
     override func didMoveToView(view: SKView) {
         if shouldInitialize {
@@ -65,35 +68,56 @@ class GameScene: SKScene {
     func handleSpriteTouch(sprite: SKSpriteNode) {
         if blueCheckers.contains(sprite) {
             colorMoving = 1
-            checkerCurrentlyMoving = sprite
+            setCheckerCurrentlyMoving(sprite)
         } else if redCheckers.contains(sprite) {
             colorMoving = 2
-            checkerCurrentlyMoving = sprite
+            setCheckerCurrentlyMoving(sprite)
         } else if boardPositionSprites.contains(sprite) && checkerCurrentlyMoving != nil {
             if let to = boardPositionSprites.indexOf(sprite) {
+                print(checkerCurrentlyMoving.position)
                 var from: Int {
                     if let index = boardPositions.indexOf(checkerCurrentlyMoving.position) {
                         return index
-                    } else {
-                        return 0
                     }
+                    
+                    return -1
                 }
+                print("\nto: \(to)")
+                print("from: \(from)")
                 if brain.legalMove(to, from: from, color: colorMoving) {
                     checkerCurrentlyMoving.position = sprite.position
                     printTurnLabel()
                 }
             }
             
+            setCheckerCurrentlyMoving(nil)
+        }
+    }
+    
+    @nonobjc func setCheckerCurrentlyMoving(sprite: SKSpriteNode?) {
+        if checkerCurrentlyMoving != nil {
+            checkerCurrentlyMoving.color = checkerCurrentlyMovingOriginalColor
+        }
+        
+        if sprite != nil {
+            checkerCurrentlyMoving = sprite
+            checkerCurrentlyMovingOriginalColor = sprite!.color
+            checkerCurrentlyMoving.color = UIColor.greenColor()
+        } else {
             checkerCurrentlyMoving = nil
+            checkerCurrentlyMovingOriginalColor = nil
         }
     }
     
     func printTurnLabel() {
         let turnLabel = SKLabelNode()
+        
         if colorMoving == 1{
             turnLabel.text = "Red's turn"
+            statusLabel.text = "Red's turn"
         } else {
             turnLabel.text = "Blue's turn"
+            statusLabel.text = "Blue's turn"
         }
 
         let scale = SKAction.scaleTo(2.5, duration: 0.5)
@@ -133,63 +157,64 @@ class GameScene: SKScene {
         let rowHeight = customFrameHeight / CGFloat(7)
         let yStart = customFrameHeight / CGFloat(7)
         
-        let row1 = yStart + rowHeight
-        let row2 = yStart + rowHeight * CGFloat(2)
-        let row3 = yStart + rowHeight * CGFloat(3)
-        let row4 = yStart + rowHeight * CGFloat(4)
-        let row5 = yStart + rowHeight * CGFloat(5)
-        let row6 = yStart + rowHeight * CGFloat(6)
-        let row7 = yStart + rowHeight * CGFloat(7)
+        let row1 = ceil(yStart + rowHeight)
+        let row2 = ceil(yStart + rowHeight * CGFloat(2))
+        let row3 = ceil(yStart + rowHeight * CGFloat(3))
+        let row4 = ceil(yStart + rowHeight * CGFloat(4))
+        let row5 = ceil(yStart + rowHeight * CGFloat(5))
+        let row6 = ceil(yStart + rowHeight * CGFloat(6))
+        let row7 = ceil(yStart + rowHeight * CGFloat(7))
         
-        let col1 = customFrameWidth / CGFloat(7)
-        let col2 = customFrameWidth / CGFloat(7) * CGFloat(2)
-        let col3 = customFrameWidth / CGFloat(7) * CGFloat(3)
-        let col4 = customFrameWidth / CGFloat(7) * CGFloat(4)
-        let col5 = customFrameWidth / CGFloat(7) * CGFloat(5)
-        let col6 = customFrameWidth / CGFloat(7) * CGFloat(6)
-        let col7 = customFrameWidth / CGFloat(7) * CGFloat(7)
-
-        //1-3
+        let col1 = ceil(customFrameWidth / CGFloat(7))
+        let col2 = ceil(customFrameWidth / CGFloat(7) * CGFloat(2))
+        let col3 = ceil(customFrameWidth / CGFloat(7) * CGFloat(3))
+        let col4 = ceil(customFrameWidth / CGFloat(7) * CGFloat(4))
+        let col5 = ceil(customFrameWidth / CGFloat(7) * CGFloat(5))
+        let col6 = ceil(customFrameWidth / CGFloat(7) * CGFloat(6))
+        let col7 = ceil(customFrameWidth / CGFloat(7) * CGFloat(7))
+        
+        //0-2
         boardPositions.append(CGPoint(x: col3, y: row5))
         boardPositions.append(CGPoint(x: col2, y: row6))
         boardPositions.append(CGPoint(x: col1, y: row7))
         
-        //4-6
+        //3-5
         boardPositions.append(CGPoint(x: col4, y: row5))
         boardPositions.append(CGPoint(x: col4, y: row6))
         boardPositions.append(CGPoint(x: col4, y: row7))
         
-        //7-9
+        //6-8
         boardPositions.append(CGPoint(x: col5, y: row5))
         boardPositions.append(CGPoint(x: col6, y: row6))
         boardPositions.append(CGPoint(x: col7, y: row7))
         
-        //10-12
+        //9-11
         boardPositions.append(CGPoint(x: col5, y: row4))
         boardPositions.append(CGPoint(x: col6, y: row4))
         boardPositions.append(CGPoint(x: col7, y: row4))
         
-        //13-15
+        //12-14
         boardPositions.append(CGPoint(x: col5, y: row3))
         boardPositions.append(CGPoint(x: col6, y: row2))
         boardPositions.append(CGPoint(x: col7, y: row1))
         
-        //16-18
+        //15-17
         boardPositions.append(CGPoint(x: col4, y: row3))
         boardPositions.append(CGPoint(x: col4, y: row2))
         boardPositions.append(CGPoint(x: col4, y: row1))
         
-        //19-21
+        //18-20
         boardPositions.append(CGPoint(x: col3, y: row3))
         boardPositions.append(CGPoint(x: col2, y: row2))
         boardPositions.append(CGPoint(x: col1, y: row1))
         
-        //22-24
+        //21-23
         boardPositions.append(CGPoint(x: col3, y: row4))
         boardPositions.append(CGPoint(x: col2, y: row4))
         boardPositions.append(CGPoint(x: col1, y: row4))
         
         for position in boardPositions {
+            print(position)
             let dotSprite = SKSpriteNode(imageNamed: "dotSprite.png")
             dotSprite.position = position
             dotSprite.zPosition = CGFloat(5)
@@ -230,7 +255,7 @@ class GameScene: SKScene {
         let customFrameWidth = size.width * widthFactor
         let topSectionY = size.height - CGFloat(50)
         
-        let statusLabel = SKLabelNode(fontNamed: "HelveticaNeue-Bold")
+        statusLabel = SKLabelNode(fontNamed: "HelveticaNeue-Bold")
         statusLabel.text = "Red's turn"
         statusLabel.name = "Status Label"
         statusLabel.fontSize = CGFloat(20)
