@@ -49,7 +49,7 @@ class MenuScene: SKScene {
     }
     
     func returnToScene() {
-        let transition = SKTransition.revealWithDirection(.Down, duration: 1.0)
+        let transition = SKTransition.revealWithDirection(.Up, duration: 1.0)
         scene?.view?.presentScene(returnScene, transition: transition)
     }
     

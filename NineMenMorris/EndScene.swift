@@ -22,7 +22,7 @@ class EndScene: SKScene {
     }
     
     func restart() {
-        let transition = SKTransition.revealWithDirection(.Left, duration: 1.0)
+        let transition = SKTransition.revealWithDirection(.Right, duration: 1.0)
         
         let gameScene = GameScene(fileNamed: "GameScene")
         gameScene!.scaleMode = .ResizeFill

@@ -10,35 +10,39 @@ import SpriteKit
 
 class GameScene: SKScene {
     
+    //Scenes & setup
     let brain = NineMenMorrisRules()
     let menuScene = MenuScene()
     let endScene = EndScene()
     var shouldInitialize = true
     
+    //Sprites & positions
     var boardPositions = Array<CGPoint>()
     var boardPositionSprites = Array<SKSpriteNode>()
-    
     var blueCheckers = Array<SKSpriteNode>()
     var redCheckers = Array<SKSpriteNode>()
     
+    //Custom frame size
     let widthFactor = CGFloat(0.87)
     let heightFactor = CGFloat(0.6)
     
+    //Moving status
     var checkerCurrentlyMoving: SKSpriteNode!
     var checkerCurrentlyMovingOriginalColor: UIColor!
     var colorMoving = 0
     var removing = false
     
+    //Labels
     var turnLabel: SKLabelNode!
     var removeLabel: SKLabelNode!
     
     override func didMoveToView(view: SKView) {
+        //Initialize if user pressed restart. Otherwise no dothing and continue old game
         if shouldInitialize {
             brain.reset()
             self.backgroundColor = UIColor.whiteColor()
             
             menuScene.setReturnScene(self)
-            menuScene.scaleMode = .ResizeFill
             
             clearOld()
             setupBoardPositions()
@@ -51,23 +55,30 @@ class GameScene: SKScene {
         for touch in touches {
             let location = touch.locationInNode(self)
             
+            //Menu button touch
             if let label = self.nodeAtPoint(location) as? SKLabelNode {
                 if label.name == "Menu Button" {
                     handleMenuButtonTouch()
                 }
             }
+            
+            //Sprite touch
             if let sprite = self.nodeAtPoint(location) as? SKSpriteNode {
                 handleSpriteTouch(sprite)
             }
         }
     }
     
+    //Transition to MenuScene
     func handleMenuButtonTouch() {
         let transition = SKTransition.revealWithDirection(.Up, duration: 1.0)
 
+        menuScene.scaleMode = .ResizeFill
+        
         scene?.view?.presentScene(menuScene, transition: transition)
     }
     
+    //Transition to EndScene
     func showEndScene() {
         let transition = SKTransition.revealWithDirection(.Right, duration: 1.0)
         
@@ -78,11 +89,33 @@ class GameScene: SKScene {
     
     func handleSpriteTouch(sprite: SKSpriteNode) {
         if blueCheckers.contains(sprite) {
-            colorMoving = 1
-            setCheckerCurrentlyMoving(sprite)
+            if removing {
+                if let pos = boardPositions.indexOf(sprite.position) {
+                    if brain.remove(pos, color: 4) {
+                        sprite.removeFromParent()
+                        removing = false
+                        updateRemoveLabel()
+                        updateTurnLabel()
+                    }
+                }
+            } else {
+                colorMoving = 1
+                setCheckerCurrentlyMoving(sprite)
+            }
         } else if redCheckers.contains(sprite) {
-            colorMoving = 2
-            setCheckerCurrentlyMoving(sprite)
+            if removing {
+                if let pos = boardPositions.indexOf(sprite.position) {
+                    if brain.remove(pos, color: 5) {
+                        sprite.removeFromParent()
+                        removing = false
+                        updateRemoveLabel()
+                        updateTurnLabel()
+                    }
+                }
+            } else {
+                colorMoving = 2
+                setCheckerCurrentlyMoving(sprite)
+            }
         } else if boardPositionSprites.contains(sprite) && checkerCurrentlyMoving != nil {
             if let to = boardPositionSprites.indexOf(sprite) {
                 var from: Int {
@@ -94,10 +127,12 @@ class GameScene: SKScene {
                 }
                 if brain.legalMove(to, from: from, color: colorMoving) {
                     checkerCurrentlyMoving.position = sprite.position
-                    printTurnLabel()
                     
                     if brain.remove(to) {
-                    
+                        removing = true
+                        updateRemoveLabel()
+                    } else {
+                        updateTurnLabel()
                     }
                 }
             }
@@ -121,30 +156,12 @@ class GameScene: SKScene {
         }
     }
     
-    func printTurnLabel() {
-        let turnLabel = SKLabelNode()
-        
+    func updateTurnLabel() {
         if colorMoving == 1{
-            turnLabel.text = "Red's turn"
             turnLabel.text = "Red's turn"
         } else {
             turnLabel.text = "Blue's turn"
-            turnLabel.text = "Blue's turn"
         }
-
-        let scale = SKAction.scaleTo(2.5, duration: 0.5)
-        let fade = SKAction.fadeOutWithDuration(0.5)
-        
-        turnLabel.fontName = "HelveticaNeue-Bold"
-        turnLabel.fontSize = 35
-        turnLabel.fontColor = UIColor.blackColor()
-        turnLabel.position = CGPoint(x: self.frame.width / 2, y: self.frame.height / 2)
-        turnLabel.zPosition = CGFloat(15)
-        
-        self.addChild(turnLabel)
-        
-        let sequence = SKAction.sequence([scale, fade])
-        turnLabel.runAction(sequence)
     }
 
     func updateRemoveLabel() {

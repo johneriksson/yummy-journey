@@ -138,7 +138,7 @@ public class NineMenMorrisRules {
 	 * Returns true if the marker where successfully removed
 	 */
     func remove(from: Int, color: Int) -> Bool {
-		if gameplan[from] == color {
+		if gameplan[from] == color && color != turn{
 			gameplan[from] = NineMenMorrisRules.EMPTY_SPACE;
 			return true
         } else {
