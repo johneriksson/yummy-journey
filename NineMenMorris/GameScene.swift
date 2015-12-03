@@ -27,6 +27,7 @@ class GameScene: SKScene {
     var checkerCurrentlyMoving: SKSpriteNode!
     var checkerCurrentlyMovingOriginalColor: UIColor!
     var colorMoving = 0
+    var removing = false
     
     var turnLabel: SKLabelNode!
     var removeLabel: SKLabelNode!
@@ -94,6 +95,10 @@ class GameScene: SKScene {
                 if brain.legalMove(to, from: from, color: colorMoving) {
                     checkerCurrentlyMoving.position = sprite.position
                     printTurnLabel()
+                    
+                    if brain.remove(to) {
+                    
+                    }
                 }
             }
             
@@ -141,9 +146,9 @@ class GameScene: SKScene {
         let sequence = SKAction.sequence([scale, fade])
         turnLabel.runAction(sequence)
     }
-    
-    func updateRemoveLabel(remove: Bool) {
-        if remove {
+
+    func updateRemoveLabel() {
+        if removing {
             removeLabel.text = "Remove"
         } else {
             removeLabel.text = ""

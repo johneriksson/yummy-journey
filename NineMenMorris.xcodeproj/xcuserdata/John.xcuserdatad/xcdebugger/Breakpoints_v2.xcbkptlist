@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NineMenMorris/NineMenMorrisRules.swift"
-            timestampString = "470777708.869584"
+            timestampString = "470836786.191794"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "98"
-            endingLineNumber = "98"
+            startingLineNumber = "97"
+            endingLineNumber = "97"
             landmarkName = "NineMenMorrisRules"
             landmarkType = "3">
          </BreakpointContent>
