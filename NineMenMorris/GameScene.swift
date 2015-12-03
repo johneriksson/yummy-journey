@@ -11,7 +11,7 @@ import SpriteKit
 class GameScene: SKScene {
     
     //Scenes & setup
-    let brain = NineMenMorrisRules()
+    var brain = NineMenMorrisRules()
     let menuScene = MenuScene()
     let endScene = EndScene()
     var shouldInitialize = true
@@ -66,6 +66,8 @@ class GameScene: SKScene {
             if let sprite = self.nodeAtPoint(location) as? SKSpriteNode {
                 handleSpriteTouch(sprite)
             }
+            
+            save()
         }
     }
     
@@ -334,5 +336,36 @@ class GameScene: SKScene {
         button.fontColor = UIColor(red: CGFloat(0.4), green: CGFloat(0.4), blue: CGFloat(0.6), alpha: CGFloat(1.0))
         self.addChild(button)
     }
-
+    
+    func save() {
+        let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        delegate.saveData(blueCheckers, red: redCheckers, removing: removing, gameplan: brain.gameplan, blueMarkers: brain.bluemarkers, redMarkers: brain.redmarkers, turn: brain.turn)
+    }
+    
+    func loadSavedData(blue: Array<SKSpriteNode>, red: Array<SKSpriteNode>, removing: Bool, gameplan: Array<Int>, blueMarkers: Int, redMarkers: Int, turn: Int) {
+        //Clear
+        for checker in blueCheckers {
+            checker.removeFromParent()
+        }
+        for checker in redCheckers {
+            checker.removeFromParent()
+        }
+        
+        //Load
+        for checker in blue {
+            self.addChild(checker)
+        }
+        blueCheckers = blue
+        for checker in red {
+            self.addChild(checker)
+        }
+        redCheckers = red
+        
+        self.removing = removing
+        self.brain.gameplan = gameplan
+        self.brain.bluemarkers = blueMarkers
+        self.brain.redmarkers = redMarkers
+        self.brain.turn = turn
+    }
 }

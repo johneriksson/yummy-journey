@@ -28,9 +28,9 @@ public class NineMenMorrisRules {
 	static let BLUE_MARKER = 4
 	static let RED_MARKER = 5
     
-    private var gameplan = [Int](count: 24, repeatedValue: 0)
-    private var bluemarkers = 9
-    private var redmarkers = 9
+    var gameplan = [Int](count: 24, repeatedValue: 0)
+    var bluemarkers = 9
+    var redmarkers = 9
     var turn = RED_MOVES // player in turn
 
 	/**

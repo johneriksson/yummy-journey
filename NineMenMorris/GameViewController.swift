@@ -16,7 +16,9 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let scene = GameScene(fileNamed:"GameScene") {
+        //Get scene from delegate
+        if let scene = GameScene(fileNamed: "GameScene") {
+            
             // Configure the view.
             let skView = self.view as! SKView
             
@@ -27,6 +29,11 @@ class GameViewController: UIViewController {
             scene.scaleMode = .ResizeFill
             
             skView.presentScene(scene)
+            
+            let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            if let (blue, red, removing, gameplan, blueMarkers, redMarkers, turn) = delegate.getSavedData() {
+                scene.loadSavedData(blue, red: red, removing: removing, gameplan: gameplan, blueMarkers: blueMarkers, redMarkers: redMarkers, turn: turn)
+            }
         }
     }
 

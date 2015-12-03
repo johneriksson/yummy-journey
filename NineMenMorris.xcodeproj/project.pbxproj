@@ -68,6 +68,7 @@
 			children = (
 				52EEE2E91C0F0B7F002218FE /* Supporting Files */,
 				521ADC6B1C04EBC60040499B /* GameScene.swift */,
+				521ADC671C04EBC60040499B /* AppDelegate.swift */,
 				521ADC6D1C04EBC60040499B /* GameViewController.swift */,
 				521ADC7D1C04EBFF0040499B /* NineMenMorrisRules.swift */,
 				52EEE2E71C0F021C002218FE /* MenuScene.swift */,
@@ -85,7 +86,6 @@
 				52A76F9D1C0DBC2D0093B369 /* dotSprite.png */,
 				521ADC771C04EBC60040499B /* Info.plist */,
 				521ADC691C04EBC60040499B /* GameScene.sks */,
-				521ADC671C04EBC60040499B /* AppDelegate.swift */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
