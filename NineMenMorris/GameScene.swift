@@ -149,8 +149,9 @@ class GameScene: SKScene {
                 return -1
             }
             if brain.legalMove(to, from: from, color: colorMoving) {
-                checkerCurrentlyMoving.position = sprite.position
-                
+                let animation = SKAction.moveTo(sprite.position, duration: 0.5)
+                checkerCurrentlyMoving.runAction(animation)
+
                 if brain.remove(to) {
                     removing = true
                     updateRemoveLabel()
