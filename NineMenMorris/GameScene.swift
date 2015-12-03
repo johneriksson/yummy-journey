@@ -84,61 +84,83 @@ class GameScene: SKScene {
         
         endScene.scaleMode = .ResizeFill
         
+        if colorMoving == 1 {
+            endScene.winner = "BLUE"
+        } else {
+            endScene.winner = "RED"
+        }
+        
         scene?.view?.presentScene(endScene, transition: transition)
     }
     
     func handleSpriteTouch(sprite: SKSpriteNode) {
         if blueCheckers.contains(sprite) {
-            if removing {
-                if let pos = boardPositions.indexOf(sprite.position) {
-                    if brain.remove(pos, color: 4) {
-                        sprite.removeFromParent()
-                        removing = false
-                        updateRemoveLabel()
-                        updateTurnLabel()
-                    }
-                }
-            } else {
-                colorMoving = 1
-                setCheckerCurrentlyMoving(sprite)
-            }
+            removeOrMarkChecker(sprite, color: "BLUE")
         } else if redCheckers.contains(sprite) {
-            if removing {
-                if let pos = boardPositions.indexOf(sprite.position) {
-                    if brain.remove(pos, color: 5) {
-                        sprite.removeFromParent()
-                        removing = false
-                        updateRemoveLabel()
-                        updateTurnLabel()
+            removeOrMarkChecker(sprite, color: "RED")
+        } else if boardPositionSprites.contains(sprite) && checkerCurrentlyMoving != nil {
+            tryToMoveChecker(sprite)
+        }
+    }
+    
+    func removeOrMarkChecker(sprite: SKSpriteNode, color: String) {
+        var removeColor: Int!
+        var winCheck: Int!
+        
+        if color == "BLUE" {
+            removeColor = 4
+            winCheck = 5
+        } else {
+            removeColor = 5
+            winCheck = 4
+        }
+        
+        if removing {
+            if let pos = boardPositions.indexOf(sprite.position) {
+                if brain.remove(pos, color: removeColor) {
+                    sprite.removeFromParent()
+                    removing = false
+                    updateRemoveLabel()
+                    updateTurnLabel()
+                    
+                    if brain.win(winCheck) {
+                        showEndScene()
                     }
+                    
                 }
+            }
+        } else {
+            if color == "BLUE" {
+                colorMoving = 1
             } else {
                 colorMoving = 2
-                setCheckerCurrentlyMoving(sprite)
             }
-        } else if boardPositionSprites.contains(sprite) && checkerCurrentlyMoving != nil {
-            if let to = boardPositionSprites.indexOf(sprite) {
-                var from: Int {
-                    if let index = boardPositions.indexOf(checkerCurrentlyMoving.position) {
-                        return index
-                    }
-                    
-                    return -1
-                }
-                if brain.legalMove(to, from: from, color: colorMoving) {
-                    checkerCurrentlyMoving.position = sprite.position
-                    
-                    if brain.remove(to) {
-                        removing = true
-                        updateRemoveLabel()
-                    } else {
-                        updateTurnLabel()
-                    }
-                }
-            }
-            
-            setCheckerCurrentlyMoving(nil)
+            setCheckerCurrentlyMoving(sprite)
         }
+    }
+    
+    func tryToMoveChecker(sprite: SKSpriteNode) {
+        if let to = boardPositionSprites.indexOf(sprite) {
+            var from: Int {
+                if let index = boardPositions.indexOf(checkerCurrentlyMoving.position) {
+                    return index
+                }
+                
+                return -1
+            }
+            if brain.legalMove(to, from: from, color: colorMoving) {
+                checkerCurrentlyMoving.position = sprite.position
+                
+                if brain.remove(to) {
+                    removing = true
+                    updateRemoveLabel()
+                } else {
+                    updateTurnLabel()
+                }
+            }
+        }
+        
+        setCheckerCurrentlyMoving(nil)
     }
     
     @nonobjc func setCheckerCurrentlyMoving(sprite: SKSpriteNode?) {

@@ -21,12 +21,12 @@
 import Foundation
 
 public class NineMenMorrisRules {
-    static let BLUE_MOVES = 1;
-    static let RED_MOVES = 2;
+    static let BLUE_MOVES = 1
+    static let RED_MOVES = 2
 
-	static let EMPTY_SPACE = 0;
-	static let BLUE_MARKER = 4;
-	static let RED_MARKER = 5;
+	static let EMPTY_SPACE = 0
+	static let BLUE_MARKER = 4
+	static let RED_MARKER = 5
     
     private var gameplan = [Int](count: 24, repeatedValue: 0)
     private var bluemarkers = 9
